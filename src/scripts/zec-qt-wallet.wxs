@@ -61,13 +61,13 @@
                     </Shortcut>
                 </File>
                 <File Source="LICENSE" />
-                <File Source="zcashd.exe" />
-                <File Source="zcash-cli.exe" />
+                <File Source="komodod.exe" />
+                <File Source="komodo-cli.exe" />
                 <File Source="README.md" />
 
-                <RegistryKey Root="HKCR" Key="zcash">
+                <RegistryKey Root="HKCR" Key="komodo">
                     <RegistryValue Type="string" Name="URL Protocol" Value=""/>
-                    <RegistryValue Type="string" Value="URL:zcash URI protocol"/>
+                    <RegistryValue Type="string" Value="URL:komodo URI protocol"/>
                     <RegistryKey Key="DefaultIcon">
                     <RegistryValue Type="string" Value="zecwallet.exe" />
                     </RegistryKey>
