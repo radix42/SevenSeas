@@ -12,32 +12,32 @@ if [ -z $ZCASH_DIR ]; then
     exit 1;
 fi
 
-if [ ! -f $ZCASH_DIR/artifacts/zcashd ]; then
-    echo "Couldn't find zcashd in $ZCASH_DIR/artifacts/. Please build zcashd."
+if [ ! -f $ZCASH_DIR/artifacts/komodod ]; then
+    echo "Couldn't find komodod in $ZCASH_DIR/artifacts/. Please build komodod."
     exit 1;
 fi
 
-if [ ! -f $ZCASH_DIR/artifacts/zcash-cli ]; then
-    echo "Couldn't find zcash-cli in $ZCASH_DIR/artifacts/. Please build zcashd."
+if [ ! -f $ZCASH_DIR/artifacts/komodo-cli ]; then
+    echo "Couldn't find komodo-cli in $ZCASH_DIR/artifacts/. Please build komodod."
     exit 1;
 fi
 
-# Ensure that zcashd is the right build
-echo -n "zcashd version........."
-if grep -q "zqwMagicBean" $ZCASH_DIR/artifacts/zcashd && ! readelf -s $ZCASH_DIR/artifacts/zcashd | grep -q "GLIBC_2\.25"; then 
+# Ensure that komodod is the right build
+echo -n "komodod version........."
+if grep -q "zqwMagicBean" $ZCASH_DIR/artifacts/komodod && ! readelf -s $ZCASH_DIR/artifacts/komodod | grep -q "GLIBC_2\.25"; then 
     echo "[OK]"
 else
     echo "[ERROR]"
-    echo "zcashd doesn't seem to be a zqwMagicBean build or zcashd is built with libc 2.25"
+    echo "komodod doesn't seem to be a zqwMagicBean build or komodod is built with libc 2.25"
     exit 1
 fi
 
-echo -n "zcashd.exe version....."
-if grep -q "zqwMagicBean" $ZCASH_DIR/artifacts/zcashd.exe; then 
+echo -n "komodod.exe version....."
+if grep -q "zqwMagicBean" $ZCASH_DIR/artifacts/komodod.exe; then 
     echo "[OK]"
 else
     echo "[ERROR]"
-    echo "zcashd doesn't seem to be a zqwMagicBean build"
+    echo "komodod doesn't seem to be a zqwMagicBean build"
     exit 1
 fi
 
@@ -86,8 +86,8 @@ mkdir bin/zecwallet-v$APP_VERSION > /dev/null
 strip zecwallet
 
 cp zecwallet                  bin/zecwallet-v$APP_VERSION > /dev/null
-cp $ZCASH_DIR/artifacts/zcashd    bin/zecwallet-v$APP_VERSION > /dev/null
-cp $ZCASH_DIR/artifacts/zcash-cli bin/zecwallet-v$APP_VERSION > /dev/null
+cp $ZCASH_DIR/artifacts/komodod    bin/zecwallet-v$APP_VERSION > /dev/null
+cp $ZCASH_DIR/artifacts/komodo-cli bin/zecwallet-v$APP_VERSION > /dev/null
 cp README.md                      bin/zecwallet-v$APP_VERSION > /dev/null
 cp LICENSE                        bin/zecwallet-v$APP_VERSION > /dev/null
 
@@ -122,7 +122,7 @@ mkdir -p $debdir/usr/local/bin
 cat src/scripts/control | sed "s/RELEASE_VERSION/$APP_VERSION/g" > $debdir/DEBIAN/control
 
 cp zecwallet                   $debdir/usr/local/bin/
-cp $ZCASH_DIR/artifacts/zcashd $debdir/usr/local/bin/zqw-zcashd
+cp $ZCASH_DIR/artifacts/komodod $debdir/usr/local/bin/zqw-komodod
 
 mkdir -p $debdir/usr/share/pixmaps/
 cp res/zecwallet.xpm           $debdir/usr/share/pixmaps/
@@ -145,14 +145,14 @@ if [ -z $MXE_PATH ]; then
     exit 0; 
 fi
 
-if [ ! -f $ZCASH_DIR/artifacts/zcashd.exe ]; then
-    echo "Couldn't find zcashd.exe in $ZCASH_DIR/artifacts/. Please build zcashd.exe"
+if [ ! -f $ZCASH_DIR/artifacts/komodod.exe ]; then
+    echo "Couldn't find komodod.exe in $ZCASH_DIR/artifacts/. Please build komodod.exe"
     exit 1;
 fi
 
 
-if [ ! -f $ZCASH_DIR/artifacts/zcash-cli.exe ]; then
-    echo "Couldn't find zcash-cli.exe in $ZCASH_DIR/artifacts/. Please build zcashd.exe"
+if [ ! -f $ZCASH_DIR/artifacts/komodo-cli.exe ]; then
+    echo "Couldn't find komodo-cli.exe in $ZCASH_DIR/artifacts/. Please build komodod.exe"
     exit 1;
 fi
 
@@ -176,8 +176,8 @@ echo "[OK]"
 echo -n "Packaging.............."
 mkdir release/zecwallet-v$APP_VERSION  
 cp release/zecwallet.exe          release/zecwallet-v$APP_VERSION 
-cp $ZCASH_DIR/artifacts/zcashd.exe    release/zecwallet-v$APP_VERSION > /dev/null
-cp $ZCASH_DIR/artifacts/zcash-cli.exe release/zecwallet-v$APP_VERSION > /dev/null
+cp $ZCASH_DIR/artifacts/komodod.exe    release/zecwallet-v$APP_VERSION > /dev/null
+cp $ZCASH_DIR/artifacts/komodo-cli.exe release/zecwallet-v$APP_VERSION > /dev/null
 cp README.md                          release/zecwallet-v$APP_VERSION 
 cp LICENSE                            release/zecwallet-v$APP_VERSION 
 cd release && zip -r Windows-binaries-zecwallet-v$APP_VERSION.zip zecwallet-v$APP_VERSION/ > /dev/null
