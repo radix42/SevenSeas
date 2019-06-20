@@ -333,7 +333,7 @@ bool ConnectionLoader::startEmbeddedZcashd() {
         zcashdProgram = appPath.absoluteFilePath("komodod");
     }
 #elif defined(Q_OS_DARWIN)
-    auto zcashdProgram = appPath.absoluteFilePath("komodod");
+    auto zcashdProgram = appPath.absoluteFilePath("pirated");
 #else
     auto zcashdProgram = appPath.absoluteFilePath("komodod.exe");
 #endif

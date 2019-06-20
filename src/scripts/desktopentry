@@ -1,13 +1,13 @@
 [Desktop Entry]
-Name=ZecWallet
-Comment=Full node and wallet for Zcash
+Name=SevenSeas
+Comment=Full node and wallet for Pirate
 GenericName=Wallet
-Exec=/usr/local/bin/zecwallet %u
+Exec=/usr/local/bin/sevenseas %u
 Icon=zecwallet.xpm
 Type=Application
 StartupNotify=true
-StartupWMClass=zecwallet
+StartupWMClass=sevenseas
 Categories=Utility;
-MimeType=x-scheme-handler/zcash;
-Keywords=zecwallet;
+MimeType=x-scheme-handler/pirate;
+Keywords=sevenseas;
 
