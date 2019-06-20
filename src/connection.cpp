@@ -471,8 +471,8 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
                     if (dots > 3)
                         dots = 0;
                 }
-                this->showInformation(QObject::tr("Your komodod is starting up. Please wait."), status);
-                main->logger->write("Waiting for zcashd to come online.");
+                this->showInformation(QObject::tr("Your pirated is starting up. Please wait."), status);
+                main->logger->write("Waiting for pirated to come online.");
                 // Refresh after one second
                 QTimer::singleShot(1000, [=]() { this->refreshZcashdState(connection, refused); });
             }
