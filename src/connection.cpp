@@ -330,12 +330,12 @@ bool ConnectionLoader::startEmbeddedZcashd() {
 #ifdef Q_OS_LINUX
     auto zcashdProgram = appPath.absoluteFilePath("zqw-zcashd");
     if (!QFile(zcashdProgram).exists()) {
-        zcashdProgram = appPath.absoluteFilePath("komodod");
+        zcashdProgram = appPath.absoluteFilePath("pirated");
     }
 #elif defined(Q_OS_DARWIN)
     auto zcashdProgram = appPath.absoluteFilePath("pirated");
 #else
-    auto zcashdProgram = appPath.absoluteFilePath("komodod.exe");
+    auto zcashdProgram = appPath.absoluteFilePath("pirated.bat");
 #endif
     
     if (!QFile(zcashdProgram).exists()) {
