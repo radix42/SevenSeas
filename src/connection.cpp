@@ -49,7 +49,7 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
             // Refused connection. So try and start embedded zcashd
             if (Settings::getInstance()->useEmbedded()) {
                 if (tryEzcashdStart) {
-                    this->showInformation(QObject::tr("Starting embedded zcashd"));
+                    this->showInformation(QObject::tr("Starting embedded pirated"));
                     if (this->startEmbeddedZcashd()) {
                         // Embedded zcashd started up. Wait a second and then refresh the connection
                         main->logger->write("Embedded zcashd started up, trying autoconnect in 1 sec");
