@@ -83,7 +83,7 @@ rm -f artifacts/rw* >/dev/null 2>&1
 cp $ZCASH_DIR/komodod sevenseas.app/Contents/MacOS/
 cp $ZCASH_DIR/komodo-cli sevenseas.app/Contents/MacOS/
 cp $ZCASH_DIR/pirated sevenseas.app/Contents/MacOS/
-cp $ZCASH_DIR/lib* sevenseas.app/Contents/MacOS/
+#cp $ZCASH_DIR/lib* sevenseas.app/Contents/MacOS/
 $QT_PATH/bin/macdeployqt sevenseas.app 
 echo "[OK]"
 
