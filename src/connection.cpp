@@ -71,7 +71,7 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
                     }
                 } else {
                     // We tried to start ezcashd previously, and it didn't work. So, show the error. 
-                    main->logger->write("Couldn't start embedded zcashd for unknown reason");
+                    main->logger->write("Couldn't start embedded komodod for unknown reason");
                     QString explanation;
                     if (config->zcashDaemon) {
                         explanation = QString() % QObject::tr("You have komodod set to start as a daemon, which can cause problems "
@@ -81,7 +81,7 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
                     } else {
                         explanation = QString() % QObject::tr("Couldn't start the embedded komodod.\n\n" 
                             "Please try restarting.\n\nIf you previously started komodod with custom arguments, you might need to  reset PIRATE.conf.\n\n" 
-                            "If all else fails, please run zcashd manually.") %  
+                            "If all else fails, please run komodod manually.") %  
                             (ezcashd ? QObject::tr("The process returned") + ":\n\n" % ezcashd->errorString() : QString(""));
                     }
                     
@@ -89,9 +89,9 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
                 }                
             } else {
                 // PIRATE.conf exists, there's no connection, and the user asked us not to start zcashd. Error!
-                main->logger->write("Not using embedded and couldn't connect to zcashd");
-                QString explanation = QString() % QObject::tr("Couldn't connect to zcashd configured in PIRATE.conf.\n\n" 
-                                      "Not starting embedded zcashd because --no-embedded was passed");
+                main->logger->write("Not using embedded and couldn't connect to pirated");
+                QString explanation = QString() % QObject::tr("Couldn't connect to pirated configured in PIRATE.conf.\n\n" 
+                                      "Not starting embedded pirated because --no-embedded was passed");
                 this->showError(explanation);
             }
         });
