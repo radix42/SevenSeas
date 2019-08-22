@@ -171,7 +171,7 @@ void ConnectionLoader::createZcashConf() {
     }
 
     main->logger->write("Creating file " + confLocation);
-    QDir().mkdir(fi.dir().absolutePath());
+    QDir().mkpath(fi.dir().absolutePath());
 
     QFile file(confLocation);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
