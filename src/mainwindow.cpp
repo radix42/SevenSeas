@@ -125,9 +125,9 @@ MainWindow::MainWindow(QWidget *parent) :
 }
  
 void MainWindow::createWebsocket(QString wormholecode) {
-    qDebug() << "Listening for app connections on port 8237";
+    qDebug() << "Listening for app connections on port 8877";
     // Create the websocket server, for listening to direct connections
-    wsserver = new WSServer(8237, false, this);
+    wsserver = new WSServer(8877, false, this);
 
     if (!wormholecode.isEmpty()) {
         // Connect to the wormhole service
