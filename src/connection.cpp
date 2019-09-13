@@ -318,7 +318,7 @@ bool ConnectionLoader::startEmbeddedZcashd() {
     if (ezcashd != nullptr) {
         if (ezcashd->state() == QProcess::NotRunning) {
             if (!processStdErrOutput.isEmpty()) {
-                QMessageBox::critical(main, QObject::tr("zcashd error"), "zcashd said: " + processStdErrOutput, 
+                QMessageBox::critical(main, QObject::tr("pirated error"), "pirated said: " + processStdErrOutput, 
                                       QMessageBox::Ok);
             }
             return false;
@@ -327,52 +327,64 @@ bool ConnectionLoader::startEmbeddedZcashd() {
         }        
     }
 
-    // Finally, start zcashd    
+    // Finally, start pirated
     QDir appPath(QCoreApplication::applicationDirPath());
 #ifdef Q_OS_LINUX
-    auto zcashdProgram = appPath.absoluteFilePath("zqw-zcashd");
-    if (!QFile(zcashdProgram).exists()) {
-        zcashdProgram = appPath.absoluteFilePath("pirated");
-    }
+    auto piratedProgram = appPath.absoluteFilePath("pirated");
 #elif defined(Q_OS_DARWIN)
-    auto zcashdProgram = appPath.absoluteFilePath("pirated");
+    auto piratedProgram = appPath.absoluteFilePath("pirated");
+#elif defined(Q_OS_WIN64)
+    // we use the CLI directly
+    auto hushdProgram = appPath.absoluteFilePath("komodod.exe");
 #else
-    auto zcashdProgram = appPath.absoluteFilePath("pirated.bat");
+    // we use the CLI directly
+    auto piratedProgram = appPath.absoluteFilePath("komodod");
 #endif
-    
-    if (!QFile(zcashdProgram).exists()) {
-        qDebug() << "Can't find zcashd at " << zcashdProgram;
-        main->logger->write("Can't find zcashd at " + zcashdProgram); 
+
+    if (!QFile(piratedProgram).exists()) {
+        qDebug() << "Can't find pirated at " << piratedProgram;
+        main->logger->write("Can't find pirated at " + piratedProgram);
         return false;
     }
 
     ezcashd = new QProcess(main);    
     QObject::connect(ezcashd, &QProcess::started, [=] () {
-        //qDebug() << "zcashd started";
+        qDebug() << "pirated started";
     });
 
     QObject::connect(ezcashd, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-                        [=](int, QProcess::ExitStatus) {
-        //qDebug() << "zcashd finished with code " << exitCode << "," << exitStatus;    
+                        [=](int exitCode, QProcess::ExitStatus exitStatus) {
+        qDebug() << "pirated finished with code " << exitCode << "," << exitStatus;
     });
 
-    QObject::connect(ezcashd, &QProcess::errorOccurred, [&] (auto) {
-        //qDebug() << "Couldn't start zcashd: " << error;
+    QObject::connect(ezcashd, &QProcess::errorOccurred, [&] (QProcess::ProcessError error) {
+        qDebug() << "Couldn't start pirated: " << error;
     });
 
     QObject::connect(ezcashd, &QProcess::readyReadStandardError, [=]() {
-        auto output = ezcashd->readAllStandardError();
-       main->logger->write("zcashd stderr:" + output);
-        processStdErrOutput.append(output);
+       auto output = ezcashd->readAllStandardError();
+       main->logger->write("pirated stderr:" + output);
+       processStdErrOutput.append(output);
     });
+    // This string should be the exact arg list seperated by single spaces
+    // TODO: if env var set, use as -pubkey
+    QString params = "-ac_name=PIRATE -ac_supply=0 -ac_reward=25600000000 -ac_halving=77777 -ac_private=1 -addnode=178.63.77.56";
+    QStringList arguments = params.split(" ");
 
 #ifdef Q_OS_LINUX
-    ezcashd->start(zcashdProgram);
+    main->logger->write("Starting on Linux: " + piratedProgram);
+    ezcashd->start(piratedProgram);
 #elif defined(Q_OS_DARWIN)
-    ezcashd->start(zcashdProgram);
-#else
+    main->logger->write("Starting on Darwin: " + piratedProgram);
+    ezcashd->start(piratedProgram);
+#elif defined(Q_OS_WIN64)
+    main->logger->write("Starting on Win64 with params " + piratedProgram + " " + params);
     ezcashd->setWorkingDirectory(appPath.absolutePath());
-    ezcashd->start("zcashd.exe");
+    ezcashd->start(hushdProgram, arguments);
+#else
+    main->logger->write("Starting on Unknown OS with params " + piratedProgram + " " + params);
+    ezcashd->setWorkingDirectory(appPath.absolutePath());
+    ezcashd->start(piratedProgram);
 #endif // Q_OS_LINUX
 
 
