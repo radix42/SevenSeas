@@ -320,7 +320,7 @@ void AppDataServer::updateUIWithNewQRCode(MainWindow* mainwindow) {
     if (ipv4Addr.isEmpty())
         return;
     
-    QString uri = "ws://" + ipv4Addr + ":8237";
+    QString uri = "ws://" + ipv4Addr + ":8877";
 
     // Get a new secret
     unsigned char* secretBin = new unsigned char[crypto_secretbox_KEYBYTES];
