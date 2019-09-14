@@ -335,7 +335,7 @@ bool ConnectionLoader::startEmbeddedZcashd() {
     auto piratedProgram = appPath.absoluteFilePath("pirated");
 #elif defined(Q_OS_WIN64)
     // we use the CLI directly
-    auto hushdProgram = appPath.absoluteFilePath("komodod.exe");
+    auto piratedProgram = appPath.absoluteFilePath("komodod.exe");
 #else
     // we use the CLI directly
     auto piratedProgram = appPath.absoluteFilePath("komodod");
@@ -380,7 +380,7 @@ bool ConnectionLoader::startEmbeddedZcashd() {
 #elif defined(Q_OS_WIN64)
     main->logger->write("Starting on Win64 with params " + piratedProgram + " " + params);
     ezcashd->setWorkingDirectory(appPath.absolutePath());
-    ezcashd->start(hushdProgram, arguments);
+    ezcashd->start(piratedProgram, arguments);
 #else
     main->logger->write("Starting on Unknown OS with params " + piratedProgram + " " + params);
     ezcashd->setWorkingDirectory(appPath.absolutePath());
