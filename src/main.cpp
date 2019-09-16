@@ -148,7 +148,7 @@ public:
 
         // Command line parser
         QCommandLineParser parser;
-        parser.setApplicationDescription("Shielded desktop wallet and embedded full node for Zcash");
+        parser.setApplicationDescription("Shielded desktop wallet and embedded full node for Pirate");
         parser.addHelpOption();
 
         // A boolean option for running it headless
@@ -156,7 +156,7 @@ public:
         parser.addOption(headlessOption);
 
         // No embedded will disable the embedded zcashd node
-        QCommandLineOption noembeddedOption(QStringList() << "no-embedded", "Disable embedded zcashd");
+        QCommandLineOption noembeddedOption(QStringList() << "no-embedded", "Disable embedded pirated");
         parser.addOption(noembeddedOption);
 
         // Positional argument will specify a zcash payment URI

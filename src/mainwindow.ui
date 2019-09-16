@@ -939,6 +939,274 @@
                </property>
               </widget>
              </item>
+
+             <item row="7" column="0">
+              <widget class="QLabel" name="notarizedhashlabel">
+               <property name="text">
+                <string>Notarized Hash</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="2">
+              <widget class="QLabel" name="notarizedhashvalue">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QLabel" name="notarizedhashspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+             <item row="8" column="0">
+              <widget class="QLabel" name="notarizedtxidlabel">
+               <property name="text">
+                <string>Notarized txid</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="2">
+              <widget class="QLabel" name="notarizedtxidvalue">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QLabel" name="notarizedtxidspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+             <item row="9" column="0">
+              <widget class="QLabel" name="laglabel">
+               <property name="text">
+                <string>Notarized Lag</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="2">
+              <widget class="QLabel" name="lagvalue">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <widget class="QLabel" name="lagspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+             <item row="10" column="0">
+              <widget class="QLabel" name="kmdversionlabel">
+               <property name="text">
+                <string>KMD Version</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="2">
+              <widget class="QLabel" name="kmdversion">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <widget class="QLabel" name="kmdversionspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+
+             <item row="11" column="0">
+              <widget class="QLabel" name="protocolversionlabel">
+               <property name="text">
+                <string>Protocol Version</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="2">
+              <widget class="QLabel" name="protocolversion">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="1">
+              <widget class="QLabel" name="protocolversionspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+
+             <item row="12" column="0">
+              <widget class="QLabel" name="versionlabel">
+               <property name="text">
+                <string>Version</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="2">
+              <widget class="QLabel" name="version">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1">
+              <widget class="QLabel" name="versionspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+             <item row="13" column="0">
+              <widget class="QLabel" name="p2pportlabel">
+               <property name="text">
+                <string>P2P Port</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="2">
+              <widget class="QLabel" name="p2pport">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="1">
+              <widget class="QLabel" name="p2pportspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+
+             <item row="14" column="0">
+              <widget class="QLabel" name="rpcportlabel">
+               <property name="text">
+                <string>RPC Port</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="2">
+              <widget class="QLabel" name="rpcport">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="1">
+              <widget class="QLabel" name="rpcportspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+             <item row="15" column="0">
+              <widget class="QLabel" name="clientnamelabel">
+               <property name="text">
+                <string>Client Name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="15" column="2">
+              <widget class="QLabel" name="clientname">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="15" column="1">
+              <widget class="QLabel" name="clientnamespacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+             <item row="16" column="0">
+              <widget class="QLabel" name="halvinglabel">
+               <property name="text">
+                <string>Next Halving</string>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="2">
+              <widget class="QLabel" name="halving">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="1">
+              <widget class="QLabel" name="halvingspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+             <item row="17" column="0">
+              <widget class="QLabel" name="localserviceslabel">
+               <property name="text">
+                <string>Local Services</string>
+               </property>
+              </widget>
+             </item>
+             <item row="17" column="2">
+              <widget class="QLabel" name="localservices">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="17" column="1">
+              <widget class="QLabel" name="localservicesspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
+             <item row="18" column="0">
+              <widget class="QLabel" name="longestchainlabel">
+               <property name="text">
+                <string>Longest Chain</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="2">
+              <widget class="QLabel" name="longestchain">
+               <property name="text">
+                <string>Loading...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="1">
+              <widget class="QLabel" name="longestchainspacer">
+               <property name="text">
+                <string>|</string>
+               </property>
+              </widget>
+             </item>
+
              <item row="3" column="2">
               <widget class="QLabel" name="solrate">
                <property name="text">
@@ -1048,6 +1316,8 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionDonate"/>
+    <addaction name="actionDiscord"/>
+    <addaction name="actionWebsite"/>
     <addaction name="actionCheck_for_Updates"/>
     <addaction name="actionAbout"/>
    </widget>
@@ -1091,6 +1361,16 @@
   <action name="actionDonate">
    <property name="text">
     <string>&amp;Donate</string>
+    </property>
+  </action>
+  <action name="actionDiscord">
+   <property name="text">
+    <string>&amp;Pirate Discord</string>
+   </property>
+  </action>
+  <action name="actionWebsite">
+   <property name="text">
+    <string>&amp;Pirate Website</string>
    </property>
   </action>
   <action name="actionCheck_for_Updates">
