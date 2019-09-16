@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionExport_transactions, &QAction::triggered, this, &MainWindow::exportTransactions);
 
     // z-Board.net
-    QObject::connect(ui->actionz_board_net, &QAction::triggered, this, &MainWindow::postToZBoard);
+    //QObject::connect(ui->actionz_board_net, &QAction::triggered, this, &MainWindow::postToZBoard);
 
     // Connect mobile app
     QObject::connect(ui->actionConnect_Mobile_App, &QAction::triggered, this, [=] () {
@@ -106,7 +106,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setupTransactionsTab();
     setupRecieveTab();
     setupBalancesTab();
-    setupTurnstileDialog();
+    //setupTurnstileDialog();
     setupZcashdTab();
 
     rpc = new RPC(this);
@@ -373,6 +373,7 @@ void MainWindow::turnstileDoMigration(QString fromAddr) {
     }
 }
 
+/*
 void MainWindow::setupTurnstileDialog() {        
     // Turnstile migration
     QObject::connect(ui->actionTurnstile_Migration, &QAction::triggered, [=] () {
@@ -384,6 +385,7 @@ void MainWindow::setupTurnstileDialog() {
     });
 
 }
+*/
 
 void MainWindow::setupStatusBar() {
     // Status Bar

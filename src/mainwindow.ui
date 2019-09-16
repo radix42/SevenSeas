@@ -1056,9 +1056,6 @@
      <string>&amp;Apps</string>
     </property>
     <addaction name="actionConnect_Mobile_App"/>
-    <addaction name="separator"/>
-    <addaction name="actionz_board_net"/>
-    <addaction name="actionTurnstile_Migration"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
@@ -1069,6 +1066,7 @@
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_Edit"/>
+   <addaction name="menuApps"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -1100,14 +1098,6 @@
     <string>Check github.com for &amp;updates</string>
    </property>
   </action>
-  <action name="actionTurnstile_Migration">
-   <property name="text">
-    <string>Sapling &amp;turnstile</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+A, Ctrl+T</string>
-   </property>
-  </action>
   <action name="actionImport_Private_Key">
    <property name="text">
     <string>&amp;Import private key</string>
@@ -1116,14 +1106,6 @@
   <action name="actionExport_All_Private_Keys">
    <property name="text">
     <string>&amp;Export all private keys</string>
-   </property>
-  </action>
-  <action name="actionz_board_net">
-   <property name="text">
-    <string>&amp;z-board.net</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+A, Ctrl+Z</string>
    </property>
   </action>
   <action name="action_Address_Book">
