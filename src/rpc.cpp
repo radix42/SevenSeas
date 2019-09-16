@@ -615,7 +615,7 @@ void RPC::getInfoThenRefresh(bool force) {
         } 
 
         // Get network info
-        payload = {
+        json payload = {
             {"jsonrpc", "1.0"},
             {"id", "someid"},
             {"method", "getnetworkinfo"}
@@ -630,7 +630,7 @@ void RPC::getInfoThenRefresh(bool force) {
         });
 
         // Call to see if the blockchain is syncing. 
-        json payload = {
+        payload = {
             {"jsonrpc", "1.0"},
             {"id", "someid"},
             {"method", "getblockchaininfo"}
