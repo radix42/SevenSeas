@@ -548,10 +548,34 @@ void RPC::getInfoThenRefresh(bool force) {
         QIcon i(":/icons/res/connected.gif");
         main->statusIcon->setPixmap(i.pixmap(16, 16));
 
-        static int    lastBlock = 0;
-        int curBlock  = reply["blocks"].get<json::number_integer_t>();
+        static int lastBlock = 0;
+        int curBlock = reply["blocks"].get<json::number_integer_t>();
+        int longestchain = reply["longestchain"].get<json::number_integer_t>();
         int version = reply["version"].get<json::number_integer_t>();
+        int p2pport = reply["p2pport"].get<json::number_integer_t>();
+        int rpcport = reply["rpcport"].get<json::number_integer_t>();
+        int notarized = reply["notarized"].get<json::number_integer_t>();
+        int protocolversion = reply["protocolversion"].get<json::number_integer_t>();
+        int lag = curBlock - notarized;
+        int blocks_until_halving= 777770 - curBlock;
+        char halving_days[8];
+        sprintf(halving_days, "%.2f", (double) (blocks_until_halving * 60) / (60*60*24) );
+        QString ntzhash = QString::fromStdString( reply["notarizedhash"].get<json::string_t>() );
+        QString ntztxid = QString::fromStdString( reply["notarizedtxid"].get<json::string_t>() );
+        QString kmdver = QString::fromStdString( reply["KMDversion"].get<json::string_t>() );
+
         Settings::getInstance()->setZcashdVersion(version);
+
+        ui->longestchain->setText(QString::number(longestchain));
+        ui->notarizedhashvalue->setText( ntzhash );
+        ui->notarizedtxidvalue->setText( ntztxid );
+        ui->lagvalue->setText( QString::number(lag) );
+        ui->version->setText( QString::number(version) );
+        ui->kmdversion->setText( kmdver );
+        ui->protocolversion->setText( QString::number(protocolversion) );
+        ui->p2pport->setText( QString::number(p2pport) );
+        ui->rpcport->setText( QString::number(rpcport) );
+        ui->halving->setText( QString::number(blocks_until_halving) % " blocks, " % QString::fromStdString(halving_days)  % " days" );
 
         if ( force || (curBlock != lastBlock) ) {
             // Something changed, so refresh everything.
@@ -590,8 +614,23 @@ void RPC::getInfoThenRefresh(bool force) {
             });
         } 
 
-        // Call to see if the blockchain is syncing. 
+        // Get network info
         json payload = {
+            {"jsonrpc", "1.0"},
+            {"id", "someid"},
+            {"method", "getnetworkinfo"}
+        };
+
+        conn->doRPCIgnoreError(payload, [=](const json& reply) {
+            QString clientname    = QString::fromStdString( reply["subversion"].get<json::string_t>() );
+            QString localservices = QString::fromStdString( reply["localservices"].get<json::string_t>() );
+
+            ui->clientname->setText(clientname);
+	    ui->localservices->setText(localservices);
+        });
+
+        // Call to see if the blockchain is syncing. 
+        payload = {
             {"jsonrpc", "1.0"},
             {"id", "someid"},
             {"method", "getblockchaininfo"}
@@ -636,35 +675,37 @@ void RPC::getInfoThenRefresh(bool force) {
                 (Settings::getInstance()->isTestnet() ? QObject::tr("testnet:") : "") %
                 QString::number(blockNumber) %
                 (isSyncing ? ("/" % QString::number(progress*100, 'f', 2) % "%") : QString()) %
-                ")";
+                ") " %
+                " Notarized: " % QString::number(notarized) %
+                " ARRR/USD=$" % QString::number( (double) Settings::getInstance()->getZECPrice() );
             main->statusLabel->setText(statusText);   
 
             auto zecPrice = Settings::getUSDFormat(1);
             QString tooltip;
             if (connections > 0) {
-                tooltip = QObject::tr("Connected to zcashd");
+                tooltip = QObject::tr("Connected to pirated");
             }
             else {
-                tooltip = QObject::tr("zcashd has no peer connections");
+                tooltip = QObject::tr("pirated has no peer connections");
             }
             tooltip = tooltip % "(v " % QString::number(Settings::getInstance()->getZcashdVersion()) % ")";
 
             if (!zecPrice.isEmpty()) {
-                tooltip = "1 ZEC = " % zecPrice % "\n" % tooltip;
+                tooltip = "1 ARRR = " % zecPrice % "\n" % tooltip;
             }
             main->statusLabel->setToolTip(tooltip);
             main->statusIcon->setToolTip(tooltip);
         });
 
     }, [=](QNetworkReply* reply, const json&) {
-        // zcashd has probably disappeared.
+        // pirated has probably disappeared.
         this->noConnection();
 
         // Prevent multiple dialog boxes, because these are called async
         static bool shown = false;
         if (!shown && prevCallSucceeded) { // show error only first time
             shown = true;
-            QMessageBox::critical(main, QObject::tr("Connection Error"), QObject::tr("There was an error connecting to zcashd. The error was") + ": \n\n"
+            QMessageBox::critical(main, QObject::tr("Connection Error"), QObject::tr("There was an error connecting to pirated. The error was") + ": \n\n"
                 + reply->errorString(), QMessageBox::StandardButton::Ok);
             shown = false;
         }
@@ -968,6 +1009,8 @@ void RPC::watchTxStatus() {
 }
 
 void RPC::checkForUpdate(bool silent) {
+    qDebug() << "checking for updates";
+
     if  (conn == nullptr) 
         return noConnection();
 
@@ -975,7 +1018,6 @@ void RPC::checkForUpdate(bool silent) {
 
     QNetworkRequest req;
     req.setUrl(cmcURL);
-    
     QNetworkReply *reply = conn->restclient->get(req);
 
     QObject::connect(reply, &QNetworkReply::finished, [=] {
@@ -1003,7 +1045,6 @@ void RPC::checkForUpdate(bool silent) {
                 }
 
                 auto currentVersion = QVersionNumber::fromString(APP_VERSION);
-                
                 // Get the max version that the user has hidden updates for
                 QSettings s;
                 auto maxHiddenVersion = QVersionNumber::fromString(s.value("update/lastversion", "0.0.0").toString());
@@ -1043,11 +1084,10 @@ void RPC::refreshZECPrice() {
     if  (conn == nullptr) 
         return noConnection();
 
-    QUrl cmcURL("http://api1.barterdexapi.net/pirateprice.php");
+    QUrl cmcURL("https://api.coingecko.com/api/v3/simple/price?ids=pirate-chain&vs_currencies=btc%2Cusd%2Ceur&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true");
 
     QNetworkRequest req;
     req.setUrl(cmcURL);
-    
     QNetworkReply *reply = conn->restclient->get(req);
 
     QObject::connect(reply, &QNetworkReply::finished, [=] {
@@ -1065,24 +1105,29 @@ void RPC::refreshZECPrice() {
                 return;
             } 
 
-            auto all = reply->readAll();
-            
+            auto all = reply->readAll(); 
             auto parsed = json::parse(all, nullptr, false);
             if (parsed.is_discarded()) {
                 Settings::getInstance()->setZECPrice(0);
                 return;
             }
 
-	    
-            const json& item = parsed.get<json::object_t>();
-                if (item["coin"].get<json::string_t>() == "PIRATE") {
-                    QString price = QString::fromStdString(item["priceUSD"].get<json::string_t>());
-                    qDebug() << "ARRR Price=" << price;
-                    Settings::getInstance()->setZECPrice(price.toDouble());
+           qDebug() << "Parsed JSON";
 
-                    return;
-                }
-	
+            const json& item  = parsed.get<json::object_t>();
+            const json& arrr  = item["pirate-chain"].get<json::object_t>();
+
+            if (arrr["usd"] >= 0) {
+                qDebug() << "Found pirate-chain key in price json";
+                // TODO: support BTC/EUR prices as well
+                //QString price = QString::fromStdString(arrr["usd"].get<json::string_t>());
+                qDebug() << "ARRR = $" << QString::number((double)arrr["usd"]);
+                Settings::getInstance()->setZECPrice( arrr["usd"] );
+
+                return;
+            } else {
+                qDebug() << "No hush key found in JSON! API might be down or we are rate-limited\n";
+            }
         } catch (...) {
             // If anything at all goes wrong, just set the price to 0 and move on.
             qDebug() << QString("Caught something nasty");
@@ -1114,7 +1159,7 @@ void RPC::shutdownZcashd() {
     connD.setupUi(&d);
     connD.topIcon->setBasePixmap(QIcon(":/icons/res/icon.ico").pixmap(256, 256));
     connD.status->setText(QObject::tr("Please wait for SevenSeas to exit"));
-    connD.statusDetail->setText(QObject::tr("Waiting for zcashd to exit"));
+    connD.statusDetail->setText(QObject::tr("Waiting for pirated to exit"));
 
     QTimer waiter(main);
 
