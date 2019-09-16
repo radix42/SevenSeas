@@ -192,7 +192,7 @@ Default wormhole: wss://wormhole.pirate.black</string>
           </widget>
          </item>
          <item>
-          <widget class="QTextEdit" name="customWormhole">
+          <widget class="QLineEdit" name="customWormhole">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
