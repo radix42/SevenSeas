@@ -1121,6 +1121,7 @@ void MainWindow::setupTransactionsTab() {
 
         if (!memo.isEmpty()) {
             QMessageBox mb(QMessageBox::Information, tr("Memo"), memo, QMessageBox::Ok, this);
+            mb.setTextFormat(Qt::PlainText);
             mb.setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
             mb.exec();
         }
@@ -1175,6 +1176,7 @@ void MainWindow::setupTransactionsTab() {
         if (!memo.isEmpty()) {
             menu.addAction(tr("View Memo"), [=] () {               
                 QMessageBox mb(QMessageBox::Information, tr("Memo"), memo, QMessageBox::Ok, this);
+                mb.setTextFormat(Qt::PlainText);
                 mb.setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
                 mb.exec();
             });
