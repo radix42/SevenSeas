@@ -143,7 +143,7 @@ void TxTableModel::updateAllData() {
                         return Settings::paymentURIPretty(Settings::parseURI(dat.memo));
                     } else {
                         return modeldata->at(index.row()).type + 
-                        (dat.memo.isEmpty() ? "" : " tx memo: \"" + dat.memo + "\"");
+                        (dat.memo.isEmpty() ? "" : " tx memo: \"" + dat.memo.toHtmlEscaped() + "\"");
                     }
                 }
         case 1: { 
